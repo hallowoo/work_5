@@ -15,7 +15,7 @@ private:
 	FVector2D start;
 	int32_t tickCount;
 	int32_t evCnt;
-	int totDist;
+	float totDist;
 
 public:
 	// Sets default values for this actor's properties

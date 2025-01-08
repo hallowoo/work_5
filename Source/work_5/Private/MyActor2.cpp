@@ -28,23 +28,28 @@ void AMyActor2::BeginPlay()
 void AMyActor2::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	tickCount++;
-	move();
+	if (tickCount < 10) {
+		tickCount++;
+		move();
+	}
 }
 
 void AMyActor2::move() {
-
-	if (tickCount <= 10) {
-		FVector2D prevLoc = start;
-		step();		
-		UE_LOG(LogTemp, Log, TEXT("Moved to : X=%f, Y=%f, Move count : %d, Moved Distance: %f"), start.X, start.Y, tickCount,distance(prevLoc, start));
+	
+	FVector2D prevLoc = start;
+	step();
+	float dist = distance(prevLoc, start);
+	totDist += dist;
+	UE_LOG(LogTemp, Log, TEXT("Moved to : X=%f, Y=%f, Move count : %d, Moved Distance: %f"), start.X, start.Y, tickCount, dist);
 		
-		if (createEvent() == 1) {
-			evCnt++; UE_LOG(LogTemp, Log, TEXT("Event Occurs! Event Count: %d"), evCnt);
-		}
-		if (tickCount == 10) { UE_LOG(LogTemp, Log, TEXT("Movement ended. Total distance: %f"), FMath::Sqrt(start.X*start.X + start.Y*start.Y)); 
-		}
+	if (createEvent() == 1) {
+		evCnt++; UE_LOG(LogTemp, Log, TEXT("Event Occurs! Event Count: %d"), evCnt);
 	}
+	if (tickCount == 10) {
+		UE_LOG(LogTemp, Log, TEXT("Movement ended.Total distance: %f, Final distance: %f, Total event count: %d"), totDist, FMath::Sqrt(start.X*start.X + start.Y*start.Y), evCnt); 
+		PrimaryActorTick.bCanEverTick = false;
+	}
+	
 	
 }
 
