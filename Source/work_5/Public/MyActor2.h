@@ -12,7 +12,7 @@ class WORK_5_API AMyActor2 : public AActor
 	GENERATED_BODY()
 
 private:
-	FVector2D start;
+	FVector2D crrntLoc;
 	int32_t tickCount;
 	int32_t evCnt;
 	float totDist;
@@ -29,7 +29,7 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	FVector2D step();
+	void step();
 
 	int32_t createEvent();
 
